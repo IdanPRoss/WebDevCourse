@@ -19,10 +19,15 @@ function pageLoaded() {
 
 //-Helper validation 
 function setValidation(element, isValid) {
-    if (isValid)
+    if (isValid) {
         element.classList.remove('is-invalid');
-    else
-        element.classList.add('is-invalid'); // Adds red border
+        element.classList.add('is-valid');
+    }
+    else {
+        element.classList.add('is-invalid');
+        element.classList.remove('is-valid');
+    }
+
 }
 
 function calculate() {
