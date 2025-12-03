@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>TubeTracker</title>
+    <title>TubeTracker - Idan Rossin</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/cyborg/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -18,11 +18,19 @@
                     <input type="hidden" id="songId">
 
                     <div class="col-md-5">
-                        <input type="text" id="title" class="form-control" placeholder="Song Title" required>
+                        <input type="text" id="title" class="form-control"
+                            placeholder="Song Title (Auto-fills if empty)">
                     </div>
-                    <div class="col-md-5">
+
+                    <div class="col-md-4">
                         <input type="url" id="url" class="form-control" placeholder="YouTube URL" required>
                     </div>
+
+                    <div class="col-md-2">
+                        <input type="number" id="rating" class="form-control" placeholder="Rating (1-10)" min="1"
+                            max="10" required>
+                    </div>
+
                     <div class="col-md-2">
                         <button type="submit" id="submitBtn" class="btn btn-success w-100">
                             <i class="fas fa-plus"></i> Add
@@ -32,25 +40,63 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between mb-3">
-            <input type="text" id="search" class="form-control w-50" placeholder="Search...">
-            <select id="sort" class="form-select w-25">
-                <option value="newest">Newest First</option>
-                <option value="az">A-Z</option>
-            </select>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <input type="text" id="search" class="form-control me-2" placeholder="Search...">
+
+            <button id="toggleViewBtn" class="btn btn-outline-info" title="Switch View">
+                <i class="fas fa-th-large"></i> </button>
         </div>
 
-        <table class="table table-hover">
+        <div class="text-white mb-3">
+            <span class="me-2">Sort by:</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sortOptions" id="radioName" value="name">
+                <label class="form-check-label" for="radioName">Name (A-Z)</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sortOptions" id="radioDate" value="date" checked>
+                <label class="form-check-label" for="radioDate">Date Added</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="sortOptions" id="radioRating" value="rating">
+                <label class="form-check-label" for="radioRating">Rating</label>
+            </div>
+        </div>
+
+        <table id="mainTable" class="table table-hover">
             <thead>
                 <tr>
+                    <th>Image</th>
                     <th>Title</th>
                     <th>Link</th>
+                    <th>Rating</th>
                     <th class="text-end">Actions</th>
                 </tr>
             </thead>
             <tbody id="songList"></tbody>
         </table>
+
+        <div id="cardContainer" class="row g-4 d-none">
+        </div>
     </div>
+
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-black">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-white">Now Playing</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="ratio ratio-16x9">
+                        <iframe id="videoFrame" src="" title="YouTube video" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="index.js"></script>
 </body>
 
